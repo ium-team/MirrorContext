@@ -9,6 +9,9 @@ import HomeKo, { frontmatter as homeFrontmatterKo } from '../content/home.ko.md'
 <BaseLayout
   title={`${homeFrontmatterEn.title} | ${homeFrontmatterKo.title}`}
   description={homeFrontmatterEn.description}
+  ogTitle={homeFrontmatterEn.title}
+  ogDescription={homeFrontmatterEn.description}
+  canonicalPath="/"
 >
   <Header current="home" />
 

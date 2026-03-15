@@ -7,6 +7,7 @@ import rehypeSlug from 'rehype-slug';
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://mirrorcontext.ium.dev',
   markdown: {
     remarkPlugins: [remarkGfm],
     rehypePlugins: [rehypeSlug]

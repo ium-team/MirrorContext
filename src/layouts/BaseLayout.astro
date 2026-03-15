@@ -4,12 +4,26 @@ import '../styles/global.css';
 interface Props {
   title: string;
   description?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImage?: string;
+  canonicalPath?: string;
+  robots?: string;
 }
 
 const {
   title,
-  description = 'Mirror Context is a document-driven approach to AI development workflows.'
+  description = 'Mirror Context is a document-driven approach to AI development workflows.',
+  ogTitle = title,
+  ogDescription = description,
+  ogImage = '/logo.svg',
+  canonicalPath,
+  robots = 'index, follow, max-image-preview:large'
 } = Astro.props;
+
+const metadataBase = Astro.site ?? Astro.url;
+const canonicalUrl = new URL(canonicalPath ?? Astro.url.pathname, metadataBase).toString();
+const ogImageUrl = new URL(ogImage, metadataBase).toString();
 ---
 
 <!doctype html>
@@ -55,7 +69,19 @@ const {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
+    <meta name="robots" content={robots} />
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Mirror Context" />
+    <meta property="og:title" content={ogTitle} />
+    <meta property="og:description" content={ogDescription} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={ogTitle} />
+    <meta name="twitter:description" content={ogDescription} />
+    <meta name="twitter:image" content={ogImageUrl} />
     <title>{title}</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" sizes="any" />

@@ -7,7 +7,13 @@ import MirrorContextArticleEn, { frontmatter as frontmatterEn } from '../content
 import MirrorContextArticleKo, { frontmatter as frontmatterKo } from '../content/mirror-context.ko.md';
 ---
 
-<BaseLayout title={`${frontmatterEn.title} | Mirror Context`} description={frontmatterEn.description}>
+<BaseLayout
+  title={`${frontmatterEn.title} | Mirror Context`}
+  description={frontmatterEn.description}
+  ogTitle={frontmatterEn.title}
+  ogDescription={frontmatterEn.description}
+  canonicalPath="/mirror-context"
+>
   <Header current="article" />
 
   <Article>
