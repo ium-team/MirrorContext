@@ -1,0 +1,61 @@
+---
+interface Props {
+  id?: string;
+}
+
+const { id } = Astro.props;
+
+const socialLinks = [
+  {
+    name: 'GitHub',
+    href: 'https://github.com/ium-team/MirrorContext',
+    tone: 'bg-white'
+  },
+  {
+    name: 'X',
+    href: 'https://x.com/bbiribarabu',
+    tone: 'bg-white'
+  },
+  {
+    name: 'Threads',
+    href: 'https://www.threads.net/',
+    tone: 'bg-white'
+  },
+  {
+    name: 'LinkedIn',
+    href: 'https://www.linkedin.com/in/%EA%B1%B4%ED%9D%AC-%EC%9D%B4-b12111392/',
+    tone: 'bg-white'
+  }
+];
+---
+
+<footer id={id} class="mt-14 w-full pt-8">
+  <div class="-mx-6 overflow-hidden border-y border-slate-300 bg-white">
+    <div class="grid w-full grid-cols-2 sm:grid-cols-4">
+    {
+      socialLinks.map((link, idx) => (
+        <a
+          class:list={[
+            'flex min-h-[5.5rem] items-center justify-center px-4 py-5 text-base font-medium text-slate-900',
+            link.tone,
+            idx % 2 === 1 ? 'border-l border-slate-300' : '',
+            idx > 1 ? 'border-t border-slate-300 sm:border-t-0' : '',
+            idx > 0 && idx < 4 ? 'sm:border-l sm:border-slate-300' : ''
+          ]}
+          href={link.href}
+          target="_blank"
+          rel="noreferrer noopener"
+          aria-label={link.name}
+        >
+          <span>{link.name}</span>
+        </a>
+      ))
+    }
+    </div>
+  </div>
+
+  <p class="mt-6 text-sm text-slate-500">
+    <span data-lang="en">Mirror Context - Document-driven context for AI-assisted development.</span>
+    <span data-lang="ko">Mirror Context - AI 지원 개발을 위한 문서 중심 컨텍스트.</span>
+  </p>
+</footer>

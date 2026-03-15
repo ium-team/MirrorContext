@@ -1,6 +1,7 @@
 ---
 import Article from '../components/Article.astro';
 import Header from '../components/Header.astro';
+import SocialFooter from '../components/SocialFooter.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import MirrorContextArticleEn, { frontmatter as frontmatterEn } from '../content/mirror-context.md';
 import MirrorContextArticleKo, { frontmatter as frontmatterKo } from '../content/mirror-context.ko.md';
@@ -23,11 +24,14 @@ import MirrorContextArticleKo, { frontmatter as frontmatterKo } from '../content
     </p>
 
     <p class="mt-2 text-sm text-slate-500">
-      <span data-lang="en">Markdown source:</span>
-      <span data-lang="ko">Markdown 원본:</span>
-      <a class="ml-2" href="/raw/mirror-context.md">mirror-context.md</a>
-      <span class="mx-1">|</span>
-      <a href="/raw/mirror-context.ko.md">mirror-context.ko.md</a>
+      <span data-lang="en">
+        Markdown source:
+        <a class="ml-2" href="/raw/mirror-context.md">mirror-context.md</a>
+      </span>
+      <span data-lang="ko">
+        Markdown 원본:
+        <a class="ml-2" href="/raw/mirror-context.ko.md">mirror-context.ko.md</a>
+      </span>
     </p>
 
     <div data-lang="en">
@@ -37,4 +41,6 @@ import MirrorContextArticleKo, { frontmatter as frontmatterKo } from '../content
       <MirrorContextArticleKo />
     </div>
   </Article>
+
+  <SocialFooter />
 </BaseLayout>
