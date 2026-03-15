@@ -7,8 +7,8 @@
   --mc-surface: #ffffff;
   --mc-text: #0f172a;
   --mc-muted: #475569;
-  --font-display: "Avenir Next", "Segoe UI", "Noto Sans", sans-serif;
-  --font-body: "Charter", "Iowan Old Style", "Palatino Linotype", "URW Palladio L", "Book Antiqua", serif;
+  --font-display: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", Arial, sans-serif;
+  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", Arial, sans-serif;
   --font-mono: "JetBrains Mono", "SFMono-Regular", "Consolas", "Liberation Mono", monospace;
 }
 
@@ -69,6 +69,7 @@ pre {
 .article-content.markdown-body {
   background-color: transparent;
   color: var(--mc-text);
+  font-family: var(--font-body);
 }
 
 .language-switch {
