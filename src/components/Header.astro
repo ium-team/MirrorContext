@@ -1,0 +1,29 @@
+---
+interface Props {
+  current?: 'home' | 'article';
+}
+
+const { current = 'home' } = Astro.props;
+---
+
+<header class="mb-12 flex items-center justify-between border-b border-slate-200 pb-4 text-sm">
+  <a class="inline-flex items-center" href="/" aria-label="Mirror Context">
+    <img src="/logo.svg" alt="Mirror Context" class="h-7 w-auto" />
+  </a>
+  <nav class="flex items-center gap-3 text-slate-600 sm:gap-5">
+    <a class={current === 'home' ? 'font-semibold text-slate-900' : ''} href="/">
+      <span data-lang="en">Home</span>
+      <span data-lang="ko">홈</span>
+    </a>
+    <a class={current === 'article' ? 'font-semibold text-slate-900' : ''} href="/mirror-context">
+      <span data-lang="en">Article</span>
+      <span data-lang="ko">아티클</span>
+    </a>
+    <div class="language-switch">
+      <select data-lang-select aria-label="Language selector">
+        <option value="en">English</option>
+        <option value="ko">한국어</option>
+      </select>
+    </div>
+  </nav>
+</header>

@@ -1,0 +1,124 @@
+@import "tailwindcss";
+@import "github-markdown-css/github-markdown-light.css";
+
+:root {
+  color-scheme: light;
+  --mc-bg: #ffffff;
+  --mc-surface: #ffffff;
+  --mc-text: #0f172a;
+  --mc-muted: #475569;
+  --font-display: "Avenir Next", "Segoe UI", "Noto Sans", sans-serif;
+  --font-body: "Charter", "Iowan Old Style", "Palatino Linotype", "URW Palladio L", "Book Antiqua", serif;
+  --font-mono: "JetBrains Mono", "SFMono-Regular", "Consolas", "Liberation Mono", monospace;
+}
+
+html {
+  background: var(--mc-bg);
+  overflow-y: scroll;
+  scrollbar-gutter: stable;
+}
+
+@supports (scrollbar-gutter: stable both-edges) {
+  html {
+    scrollbar-gutter: stable both-edges;
+  }
+}
+
+body {
+  color: var(--mc-text);
+  font-family: var(--font-body);
+  text-rendering: optimizeLegibility;
+}
+
+[data-lang="ko"] {
+  display: none;
+}
+
+html[lang="ko"] [data-lang="ko"] {
+  display: revert;
+}
+
+html[lang="ko"] [data-lang="en"] {
+  display: none;
+}
+
+a {
+  color: var(--mc-text);
+  text-decoration-color: #94a3b8;
+  text-underline-offset: 0.2em;
+}
+
+a:hover {
+  text-decoration-color: var(--mc-muted);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+}
+
+code,
+pre {
+  font-family: var(--font-mono);
+}
+
+.article-content {
+  margin-inline: auto;
+  max-width: 980px;
+}
+
+.article-content.markdown-body {
+  background-color: transparent;
+  color: var(--mc-text);
+}
+
+.language-switch {
+  display: inline-flex;
+  position: relative;
+}
+
+.language-switch::after {
+  color: #64748b;
+  content: "▾";
+  font-size: 0.75rem;
+  pointer-events: none;
+  position: absolute;
+  right: 0.78rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.language-switch select {
+  appearance: none;
+  background: #ffffff;
+  border: 1px solid #c8d5e6;
+  color: #1e293b;
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.015em;
+  line-height: 1.2;
+  min-width: 7.2rem;
+  padding: 0.5rem 2rem 0.5rem 0.78rem;
+  transition: border-color 140ms ease, transform 120ms ease;
+}
+
+.language-switch select:hover {
+  border-color: #94a3b8;
+  transform: translateY(-1px);
+}
+
+.language-switch select:focus-visible {
+  border-color: #0f172a;
+  outline: none;
+}
+
+.language-switch select option {
+  background: #ffffff;
+  color: #0f172a;
+  font-weight: 600;
+}

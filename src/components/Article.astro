@@ -1,0 +1,29 @@
+---
+interface Props {
+  title: string;
+  titleKo?: string;
+  dek?: string;
+  dekKo?: string;
+}
+
+const { title, titleKo, dek, dekKo } = Astro.props;
+---
+
+<article class="mx-auto max-w-[62rem]">
+  <h1 class="text-4xl font-semibold leading-tight text-slate-900 sm:text-5xl">
+    <span data-lang="en">{title}</span>
+    <span data-lang="ko">{titleKo ?? title}</span>
+  </h1>
+  {
+    dek && (
+      <p class="mt-5 max-w-2xl text-lg leading-relaxed text-slate-600">
+        <span data-lang="en">{dek}</span>
+        <span data-lang="ko">{dekKo ?? dek}</span>
+      </p>
+    )
+  }
+
+  <div class="article-content markdown-body mt-12">
+    <slot />
+  </div>
+</article>

@@ -1,0 +1,183 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const {
+  title,
+  description = 'Mirror Context is a document-driven approach to AI development workflows.'
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <script is:inline>
+      (() => {
+        const STORAGE_KEY = 'mirror-context-language';
+        const LANGS = ['en', 'ko'];
+
+        const sanitize = (value) => {
+          if (!value) {
+            return null;
+          }
+
+          return LANGS.includes(value) ? value : null;
+        };
+
+        const queryLanguage = sanitize(new URLSearchParams(window.location.search).get('lang'));
+        let resolved = queryLanguage;
+
+        if (!resolved) {
+          try {
+            resolved = sanitize(localStorage.getItem(STORAGE_KEY));
+          } catch (error) {
+            console.warn('Unable to read saved language before first paint.', error);
+          }
+        }
+
+        if (!resolved) {
+          resolved = navigator.language.toLowerCase().startsWith('ko') ? 'ko' : 'en';
+        }
+
+        document.documentElement.lang = resolved;
+
+        try {
+          localStorage.setItem(STORAGE_KEY, resolved);
+        } catch (error) {
+          console.warn('Unable to persist initial language.', error);
+        }
+      })();
+    </script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+  </head>
+  <body class="min-h-screen bg-white px-6 pt-0 pb-8 text-slate-900">
+    <div class="mx-auto max-w-5xl border border-slate-200 bg-white px-6 py-8">
+      <slot />
+    </div>
+    <script is:inline>
+      (() => {
+        const STORAGE_KEY = 'mirror-context-language';
+        const LANGS = ['en', 'ko'];
+
+        const resetScrollOnPageNav = () => {
+          if (window.location.hash) {
+            return;
+          }
+
+          window.scrollTo(0, 0);
+        };
+
+        if ('scrollRestoration' in window.history) {
+          window.history.scrollRestoration = 'manual';
+        }
+
+        const sanitize = (value) => {
+          if (!value) {
+            return null;
+          }
+
+          return LANGS.includes(value) ? value : null;
+        };
+
+        const updateInternalLinks = (language) => {
+          document.querySelectorAll('a[href]').forEach((node) => {
+            if (!(node instanceof HTMLAnchorElement)) {
+              return;
+            }
+
+            const rawHref = node.getAttribute('href');
+            if (!rawHref || rawHref.startsWith('#') || rawHref.startsWith('mailto:') || rawHref.startsWith('tel:')) {
+              return;
+            }
+
+            const url = new URL(rawHref, window.location.origin);
+            if (url.origin !== window.location.origin) {
+              return;
+            }
+
+            if (language === 'ko') {
+              url.searchParams.set('lang', 'ko');
+            } else {
+              url.searchParams.delete('lang');
+            }
+
+            node.setAttribute('href', `${url.pathname}${url.search}${url.hash}`);
+          });
+        };
+
+        const applyLanguage = (language) => {
+          const next = sanitize(language) ?? 'en';
+          document.documentElement.lang = next;
+
+          const currentUrl = new URL(window.location.href);
+          if (next === 'ko') {
+            currentUrl.searchParams.set('lang', 'ko');
+          } else {
+            currentUrl.searchParams.delete('lang');
+          }
+
+          const nextUrl = `${currentUrl.pathname}${currentUrl.search}${currentUrl.hash}`;
+          const nowUrl = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+          if (nextUrl !== nowUrl) {
+            window.history.replaceState({}, '', nextUrl);
+          }
+
+          document.querySelectorAll('[data-lang-select]').forEach((node) => {
+            if (node instanceof HTMLSelectElement) {
+              node.value = next;
+            }
+          });
+
+          updateInternalLinks(next);
+        };
+
+        const setLanguage = (language) => {
+          const next = sanitize(language) ?? 'en';
+          applyLanguage(next);
+
+          try {
+            localStorage.setItem(STORAGE_KEY, next);
+          } catch (error) {
+            console.warn('Unable to save language preference.', error);
+          }
+        };
+
+        const init = () => {
+          applyLanguage(sanitize(document.documentElement.lang) ?? 'en');
+          resetScrollOnPageNav();
+
+          document.addEventListener('change', (event) => {
+            if (!(event.target instanceof Element)) {
+              return;
+            }
+
+            const selector = event.target.closest('[data-lang-select]');
+            if (!(selector instanceof HTMLSelectElement)) {
+              return;
+            }
+
+            setLanguage(selector.value);
+          });
+
+          window.addEventListener('pageshow', resetScrollOnPageNav);
+        };
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', init, { once: true });
+        } else {
+          init();
+        }
+      })();
+    </script>
+  </body>
+</html>

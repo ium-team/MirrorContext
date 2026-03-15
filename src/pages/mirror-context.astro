@@ -1,0 +1,40 @@
+---
+import Article from '../components/Article.astro';
+import Header from '../components/Header.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import MirrorContextArticleEn, { frontmatter as frontmatterEn } from '../content/mirror-context.md';
+import MirrorContextArticleKo, { frontmatter as frontmatterKo } from '../content/mirror-context.ko.md';
+---
+
+<BaseLayout title={`${frontmatterEn.title} | Mirror Context`} description={frontmatterEn.description}>
+  <Header current="article" />
+
+  <Article
+    title={frontmatterEn.title}
+    titleKo={frontmatterKo.title}
+    dek={frontmatterEn.description}
+    dekKo={frontmatterKo.description}
+  >
+    <p>
+      <a href="/">
+        <span data-lang="en">&larr; Back to homepage</span>
+        <span data-lang="ko">&larr; 홈으로 돌아가기</span>
+      </a>
+    </p>
+
+    <p class="mt-2 text-sm text-slate-500">
+      <span data-lang="en">Markdown source:</span>
+      <span data-lang="ko">Markdown 원본:</span>
+      <a class="ml-2" href="/raw/mirror-context.md">mirror-context.md</a>
+      <span class="mx-1">|</span>
+      <a href="/raw/mirror-context.ko.md">mirror-context.ko.md</a>
+    </p>
+
+    <div data-lang="en">
+      <MirrorContextArticleEn />
+    </div>
+    <div data-lang="ko">
+      <MirrorContextArticleKo />
+    </div>
+  </Article>
+</BaseLayout>
