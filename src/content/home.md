@@ -1,18 +1,18 @@
 ---
 title: Mirror Context
-description: A minimal framework for AI-assisted software development where written artifacts stay synchronized with the codebase.
+description: A minimal framework for AI-assisted software development that keeps documents and the codebase synchronized at all times.
 ---
-
-<p class="text-sm uppercase tracking-[0.14em] text-slate-500">Concept page</p>
 
 <h1 class="mt-3 text-4xl font-semibold leading-tight text-slate-900 sm:text-5xl">Mirror Context</h1>
 
 <p class="mt-5 text-xl leading-relaxed text-slate-600">
-  A minimal framework for AI-assisted software development where written artifacts stay synchronized with the codebase.
+  As development with AI increases, I felt that how we maintain project context is becoming an important issue.<br>
+  So I organized an idea called Mirror Context: managing project context by keeping a document structure that corresponds to the code structure.
+
 </p>
 
 <p class="mt-8 text-lg leading-8 text-slate-700">
-  Instead of relying on scattered chat history, Mirror Context treats project docs as a first-class system: every intent, decision, and implementation loop is reflected in a maintained document set.
+  It is not yet a proven method, but I think it can be considered as one approach to managing context in the era of developing together with AI.
 </p>
 
 <div class="mt-10 flex flex-wrap items-center gap-3">
