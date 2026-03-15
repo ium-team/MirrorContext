@@ -6,12 +6,15 @@ description: 문서와 코드베이스를 항상 동기화해 두는 AI 지원 �
 <h1 class="mt-3 text-4xl font-semibold leading-tight text-slate-900 sm:text-5xl">Mirror Context</h1>
 
 <p class="mt-5 text-xl leading-relaxed text-slate-600">
-  문서와 코드베이스를 항상 동기화해 두는 AI 지원 소프트웨어 개발을 위한 최소한의 프레임워크입니다.
+  AI를 사용한 개발이 늘어나면서 프로젝트의 맥락(context)을 어떻게 유지할 것인가가 중요한 문제라고 느꼈습니다.<br>
+그래서 코드 구조에 대응되는 문서 구조를 함께 두어 프로젝트의 맥락을 관리하는 방식, Mirror Context라는 아이디어를 정리해 보았습니다.
+
 </p>
 
 <p class="mt-8 text-lg leading-8 text-slate-700">
-  흩어진 채팅 기록에 의존하지 않고, Mirror Context는 프로젝트 문서를 핵심 시스템으로 다룹니다. 모든 의도, 결정, 구현 루프를 관리되는 문서 집합에 반영합니다.
+  아직 검증된 방법은 아니지만, AI와 함께 개발하는 시대에 context를 관리하는 하나의 접근으로 생각해 볼 수 있을 것 같습니다.
 </p>
+
 
 <div class="mt-10 flex flex-wrap items-center gap-3">
   <a
