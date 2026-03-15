@@ -117,7 +117,12 @@ const {
 
         const applyLanguage = (language) => {
           const next = sanitize(language) ?? 'en';
-          document.documentElement.lang = next;
+          const active = sanitize(document.documentElement.lang) ?? 'en';
+          const languageChanged = active !== next;
+
+          if (languageChanged) {
+            document.documentElement.lang = next;
+          }
 
           const currentUrl = new URL(window.location.href);
           if (next === 'ko') {
@@ -134,7 +139,9 @@ const {
 
           document.querySelectorAll('[data-lang-select]').forEach((node) => {
             if (node instanceof HTMLSelectElement) {
-              node.value = next;
+              if (node.value !== next) {
+                node.value = next;
+              }
             }
           });
 
@@ -172,11 +179,7 @@ const {
           window.addEventListener('pageshow', resetScrollOnPageNav);
         };
 
-        if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', init, { once: true });
-        } else {
-          init();
-        }
+        init();
       })();
     </script>
   </body>
