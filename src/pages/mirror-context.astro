@@ -10,12 +10,7 @@ import MirrorContextArticleKo, { frontmatter as frontmatterKo } from '../content
 <BaseLayout title={`${frontmatterEn.title} | Mirror Context`} description={frontmatterEn.description}>
   <Header current="article" />
 
-  <Article
-    title={frontmatterEn.title}
-    titleKo={frontmatterKo.title}
-    dek={frontmatterEn.description}
-    dekKo={frontmatterKo.description}
-  >
+  <Article>
     <p>
       <a href="/">
         <span data-lang="en">&larr; Back to homepage</span>

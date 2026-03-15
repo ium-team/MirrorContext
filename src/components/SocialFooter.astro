@@ -3,9 +3,17 @@ interface Props {
   id?: string;
 }
 
+interface SocialLink {
+  name: string;
+  href: string;
+  tone: string;
+  logoSrc?: string;
+  logoAlt?: string;
+}
+
 const { id } = Astro.props;
 
-const socialLinks = [
+const socialLinks: SocialLink[] = [
   {
     name: 'GitHub',
     href: 'https://github.com/ium-team/MirrorContext',
@@ -17,14 +25,16 @@ const socialLinks = [
     tone: 'bg-white'
   },
   {
-    name: 'Threads',
-    href: 'https://www.threads.net/',
-    tone: 'bg-white'
-  },
-  {
     name: 'LinkedIn',
     href: 'https://www.linkedin.com/in/%EA%B1%B4%ED%9D%AC-%EC%9D%B4-b12111392/',
     tone: 'bg-white'
+  },
+  {
+    name: 'ium',
+    href: 'https://x.com/ium_social',
+    tone: 'bg-white',
+    logoSrc: '/logo.svg',
+    logoAlt: 'ium'
   }
 ];
 ---
@@ -47,7 +57,13 @@ const socialLinks = [
           rel="noreferrer noopener"
           aria-label={link.name}
         >
-          <span>{link.name}</span>
+          {
+            link.logoSrc ? (
+              <img src={link.logoSrc} alt={link.logoAlt || 'ium'} class="h-6 w-auto" />
+            ) : (
+              <span>{link.name}</span>
+            )
+          }
         </a>
       ))
     }
