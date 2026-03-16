@@ -28,10 +28,32 @@ import MirrorContextArticleKo, { frontmatter as frontmatterKo } from '../content
       <span data-lang="en">
         Markdown source:
         <a class="ml-2" href="/raw/mirror-context.md">mirror-context.md</a>
+        <button
+          type="button"
+          class="ml-3 rounded border border-slate-300 px-2 py-0.5 text-xs font-medium text-slate-700 transition hover:border-slate-400 hover:text-slate-900"
+          data-copy-markdown
+          data-source-url="/raw/mirror-context.md"
+          data-default-label="Copy content"
+          data-success-label="Copied!"
+          data-fail-label="Copy failed"
+        >
+          Copy content
+        </button>
       </span>
       <span data-lang="ko">
         Markdown 원본:
         <a class="ml-2" href="/raw/mirror-context.ko.md">mirror-context.ko.md</a>
+        <button
+          type="button"
+          class="ml-3 rounded border border-slate-300 px-2 py-0.5 text-xs font-medium text-slate-700 transition hover:border-slate-400 hover:text-slate-900"
+          data-copy-markdown
+          data-source-url="/raw/mirror-context.ko.md"
+          data-default-label="내용 복사"
+          data-success-label="복사됨!"
+          data-fail-label="복사 실패"
+        >
+          내용 복사
+        </button>
       </span>
     </p>
 
@@ -42,6 +64,91 @@ import MirrorContextArticleKo, { frontmatter as frontmatterKo } from '../content
       <MirrorContextArticleKo />
     </div>
   </Article>
+
+  <script is:inline>
+    (() => {
+      const RESET_DELAY = 1800;
+
+      const fallbackWriteText = async (text) => {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.setAttribute('readonly', 'true');
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        textarea.style.pointerEvents = 'none';
+        document.body.append(textarea);
+        textarea.select();
+
+        const copied = document.execCommand('copy');
+        textarea.remove();
+
+        if (!copied) {
+          throw new Error('Clipboard fallback failed.');
+        }
+      };
+
+      const writeText = async (text) => {
+        if (navigator.clipboard?.writeText) {
+          await navigator.clipboard.writeText(text);
+          return;
+        }
+
+        await fallbackWriteText(text);
+      };
+
+      const updateButtonLabel = (button, label, shouldDisable) => {
+        button.textContent = label;
+        button.disabled = shouldDisable;
+      };
+
+      const handleCopyClick = async (event) => {
+        if (!(event.currentTarget instanceof HTMLButtonElement)) {
+          return;
+        }
+
+        const button = event.currentTarget;
+        const sourceUrl = button.dataset.sourceUrl;
+        if (!sourceUrl) {
+          return;
+        }
+
+        const defaultLabel = button.dataset.defaultLabel ?? 'Copy';
+        const successLabel = button.dataset.successLabel ?? 'Copied!';
+        const failLabel = button.dataset.failLabel ?? 'Copy failed';
+
+        try {
+          const response = await fetch(sourceUrl, {
+            headers: {
+              Accept: 'text/markdown'
+            }
+          });
+
+          if (!response.ok) {
+            throw new Error(`Failed to fetch markdown: ${response.status}`);
+          }
+
+          const markdown = await response.text();
+          await writeText(markdown);
+          updateButtonLabel(button, successLabel, true);
+        } catch (error) {
+          console.warn('Unable to copy markdown content.', error);
+          updateButtonLabel(button, failLabel, true);
+        }
+
+        window.setTimeout(() => {
+          updateButtonLabel(button, defaultLabel, false);
+        }, RESET_DELAY);
+      };
+
+      document.querySelectorAll('[data-copy-markdown]').forEach((node) => {
+        if (!(node instanceof HTMLButtonElement)) {
+          return;
+        }
+
+        node.addEventListener('click', handleCopyClick);
+      });
+    })();
+  </script>
 
   <SocialFooter />
 </BaseLayout>
